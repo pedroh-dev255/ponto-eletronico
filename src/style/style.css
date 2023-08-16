@@ -1,0 +1,50 @@
+
+@font-face {
+    font-family: inter;
+    src: url(Inter-VariableFont_slnt,wght.ttf);
+}
+body{
+    font-family: inter;
+    display: block;
+    text-align: center;
+    
+}
+
+
+div.borda {
+    /* a ordem dos lados é a mesma que com margens */
+    width: 80%;
+    border-width: 5px; /* aqui, cada lado possui uma borda de largura diferente */
+    border-style: outset; /* estilos de borda diferentes para cima-baixo e esquerda-direita */
+    border-color: #5e15f1; /* uma cor de borda para cada lado */
+    
+}
+
+div.borda2{
+    /* a ordem dos lados é a mesma que com margens */
+    margin: 10px;
+    width: 30%;
+    font-size: 10px;
+    border-width: 5px; /* aqui, cada lado possui uma borda de largura diferente */
+    border-style: outset; /* estilos de borda diferentes para cima-baixo e esquerda-direita */
+    border-color: #29d5e2; /* uma cor de borda para cada lado */
+    background-color: #04AA6D;
+    color: white;
+}
+
+/*   Configuração da tabela de presença   */
+table {
+    border-collapse: collapse;
+    width: 100%;
+} 
+
+th, td {
+    text-align: center;
+    padding: 8px;
+}
+tr:nth-child(even){background-color: #f2f2f2}  
+th {
+    background-color: #04AA6D;
+    color: white;
+}
+
