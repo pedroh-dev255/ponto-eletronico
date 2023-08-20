@@ -4,6 +4,28 @@
     if(!isset($_SESSION['id'])){
         header('Location: ../configs/login.php'); 
     }
+    include_once("../configs/conexao.php");
+    if(isset($_GET['fone'])){
+        if(!isset($_GET['zap_dir'])){
+            $zap_dir = 'off';
+        }else{
+            $zap_dir = 'on';
+        }
+        if(!isset($_GET['zap_fun'])){
+            $zap_fun = 'off';
+        }else{
+            $zap_fun = 'on';
+        }
+        $fone = str_replace(array('(', ')', ' ', '-'), '', $_GET['fone']);
+
+        $conn->query("UPDATE `ponto`.`settings` SET `zap_fun` = '$zap_fun', `zap_dir` = '$zap_dir',`fone_dir` = '$fone' WHERE (`id` = '1');")->fetchAll();
+        header("Location: settings.php");
+
+    }
+    
+    $verif_s = $conn->query("SELECT * FROM settings")->fetchAll();
+    foreach ($verif_s as $row) {}
+
 
 ?>
 <!DOCTYPE html>
@@ -55,6 +77,17 @@
                 value = value.replace(/(\d)(\d{4})$/,"$1-$2")
                 return value
             }
+
+            // Função para carregar automaticamente a máscara de telefone após o carregamento da página
+            const applyPhoneMaskOnLoad = () => {
+                const phoneInput = document.querySelector('input[name="fone"]');
+                if (phoneInput) {
+                    phoneInput.value = phoneMask(phoneInput.value);
+                }
+            };
+
+            // Use o evento 'DOMContentLoaded' para chamar a função após a página ser carregada
+            document.addEventListener('DOMContentLoaded', applyPhoneMaskOnLoad);
         </script>
         <h2>Configurações</h2>
         <div style="margin: 20px;">
@@ -64,7 +97,7 @@
                         <td>Enviar ponto por Whatsapp para o colaborador?</td>
                         <td>
                             <label class="switch">
-                                <input name="zap_fun" type="checkbox">
+                                <input name="zap_fun" type="checkbox" <?php if($row['zap_fun'] == 'on'){echo "checked";}?>>
                                 <span class="slider round"></span>
                             </label>
                         </td>
@@ -73,7 +106,7 @@
                         <td>Enviar ponto por Whatsapp para diretoria?</td>
                         <td>
                             <label class="switch">
-                                <input name="zap_dir" type="checkbox">
+                                <input name="zap_dir" id="zapDirSwitch" type="checkbox" <?php if($row['zap_dir'] == 'on'){echo "checked";}?>>
                                 <span class="slider round"></span>
                             </label>
                         </td>
@@ -81,7 +114,7 @@
                     <tr>
                         <td>Numero da diretoria com DDD</td>
                         <td>
-                            <input  type="tel" name="fone" id="" maxlength="15" onkeyup="handlePhone(event)">
+                            <input  type="tel" name="fone" id="foneInput" maxlength="15" onkeyup="handlePhone(event)" value="<?php echo $row['fone_dir']?>">
                         </td>
                     </tr>
                     <tr>
@@ -96,4 +129,14 @@
             </form>
         </div>
     </div>
+    <script>
+        
+        const foneInput = document.getElementById('foneInput');
+        const zapDirSwitch = document.getElementById('zapDirSwitch');
+
+        zapDirSwitch.addEventListener('change', function () {
+            foneInput.required = this.checked;
+            
+        });
+    </script>
 </body>

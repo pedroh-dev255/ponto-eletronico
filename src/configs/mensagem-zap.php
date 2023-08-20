@@ -12,7 +12,7 @@
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         $data = <<<DATA
         {
-        "number":"",
+        "number":"$numero",
         "body":"$mensagem"  
         }
         DATA;
