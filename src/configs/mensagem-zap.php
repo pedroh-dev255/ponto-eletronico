@@ -21,7 +21,7 @@
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         $resp = curl_exec($curl);
-        echo $curl;
+        //echo $curl;
         curl_close($curl);
         //var_dump($resp);
         //header('Location: .');

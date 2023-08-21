@@ -162,24 +162,25 @@ if($text_tipo_registro == "entrada"){
 }else if($text_tipo_registro == "saída"){
     $mensagem = "Hórario de saida registrado: " . $horario_atual;
 }
-$verif_s = $conn->query("SELECT * FROM settings")->fetchAll();
+$verif_s = $conn->query("SELECT * FROM settings where id = 1")->fetchAll();
 foreach ($verif_s as $zap) {}
 if($zap['zap_fun'] == 'on'){
+    echo "<br><br>".$numero . $mensagem;
     include_once("../configs/mensagem-zap.php");
 }
 
 if($zap['zap_dir'] == 'on'){
     $numero = $zap['fone_dir'];
-    $text=$mensagem;
-   echo  $mensagem = " Funcionario: " . $nome .". " . $mensagem;
+    $mensagem = strval("Funcionario: " . $nome .". " . $mensagem);
+    echo "<br><br>".$numero . $mensagem;
     include_once("../configs/mensagem-zap.php");
 }
 
 // Acessa o IF quando cadastrar com sucesso
 if ($cad_horario->rowCount()) {
     $_SESSION['msg'] = "<h2 style='color: green;'>" . $nome . "</h2><p style='color: green;'><b>seu horário de $text_tipo_registro cadastrado com sucesso!</b></p>";
-   // header("Location: ../../");
+    header("Location: ../../");
 } else {
     $_SESSION['msg'] = "<p style='color: #f00;'>" . $nome . " seu horário de $text_tipo_registro não cadastrado com sucesso! "; if($text_tipo_registro == "saída"){echo "Até Amanha!";} echo "</p>";
-  //  header("Location: ../../");
+    header("Location: ../../");
 }
