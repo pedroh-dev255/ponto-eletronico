@@ -16,9 +16,14 @@
         }else{
             $zap_fun = 'on';
         }
+        if(!isset($_GET['bh'])){
+            $bh = 'off';
+        }else{
+            $bh = 'on';
+        }
         $fone = str_replace(array('(', ')', ' ', '-'), '', $_GET['fone']);
 
-        $conn->query("UPDATE `ponto`.`settings` SET `zap_fun` = '$zap_fun', `zap_dir` = '$zap_dir',`fone_dir` = '$fone' WHERE (`id` = '1');")->fetchAll();
+        $conn->query("UPDATE `ponto`.`settings` SET `zap_fun` = '$zap_fun',`bh` = '$bh', `zap_dir` = '$zap_dir',`fone_dir` = '$fone' WHERE (`id` = '1');")->fetchAll();
         header("Location: settings.php");
 
     }
@@ -118,6 +123,15 @@
                         </td>
                     </tr>
                     <tr>
+                    <tr>
+                        <td>Ativar banco de horas?</td>
+                        <td>
+                            <label class="switch">
+                                <input name="bh" type="checkbox" <?php if($row['bh'] == 'on'){echo "checked";}?>>
+                                <span class="slider round"></span>
+                            </label>
+                        </td>
+                    </tr>
                         <td></td>
                         <td>
                             <button type="submit">Salvar configurações</button>
