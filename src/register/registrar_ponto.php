@@ -9,7 +9,7 @@ ob_start();
 date_default_timezone_set('America/Sao_Paulo');
 
 // Gerar com PHP o horario atual
-$horario_atual = date("H:i:s");
+$horario_atual = date("H:i:F");
 //var_dump($horario_atual);
  
 // Gerar a data com PHP no formato que deve ser salvo no BD

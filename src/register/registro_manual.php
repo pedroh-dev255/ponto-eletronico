@@ -20,15 +20,15 @@ if (isset($_POST['fun'])) {
     if ($verificador == 1) {
         $_SESSION['msg'] = "<br><div style='text-align: center; font-size: 20px;'><b>Dia já cadastrado, necessário fazer edição <a href='edicao.php?id=$id_dia'>Clique aqui para editar o dia</a></b></div><br>";
     } else {
-        if(date('w', strtotime($_POST['data'])) == 6){
+        if (date('w', strtotime($_POST['data'])) == 6) {
             $insert = "insert into pontos (data_entrada, entrada, ft_entrada, saida_intervalo, ft_saida_i, usuario_id, obs) values ('$_POST[data]','$_POST[entrada]','$img_edit','$_POST[saida_i]','$img_edit',$_POST[fun], 'DIA CADASTRADO MANUALMENTE')";
             $data_insert = $conn->query($insert)->fetchAll();
             $_SESSION['msg'] = "<br><div style='text-align: center; font-size: 20px;'><b>Dia Cadastrado</b></div><br>";
-        }else{
+        } else {
             $insert = "insert into pontos (data_entrada, entrada, ft_entrada, saida_intervalo, ft_saida_i, retorno_intervalo, ft_volta_i, saida, ft_saida, usuario_id, obs) values ('$_POST[data]','$_POST[entrada]','$img_edit','$_POST[saida_i]','$img_edit','$_POST[volta_i]','$img_edit','$_POST[saida]','$img_edit',$_POST[fun], 'DIA CADASTRADO MANUALMENTE')";
             $data_insert = $conn->query($insert)->fetchAll();
             $_SESSION['msg'] = "<br><div style='text-align: center; font-size: 20px;'><b>Dia Cadastrado</b></div><br>";
-        
+
         }
     }
 }
@@ -47,9 +47,9 @@ if (isset($_POST['fun'])) {
     <script>
         function verificarDia() {
             var data = document.getElementById('data').value;
-            
+
             var dataObj = new Date(data);
-            
+
             var en1 = document.getElementById('en1');
             var sai1 = document.getElementById('sai1');
             var en2 = document.getElementById('en2');
@@ -87,7 +87,7 @@ if (isset($_POST['fun'])) {
                 saida_i.value = "12:00:00";
                 volta_i.value = null;
                 saida.value = null;
-            }else if(dataObj.getDay() === 6){
+            } else if (dataObj.getDay() === 6) {
                 ent.disabled = true;
                 en1.style.display = 'none';
                 ent.style.display = 'none';
@@ -135,7 +135,7 @@ if (isset($_POST['fun'])) {
                 saida.value = "18:00:00";
             }
         }
-        
+
     </script>
 </head>
 
@@ -170,27 +170,34 @@ if (isset($_POST['fun'])) {
         echo $_SESSION['msg'];
         unset($_SESSION['msg']);
     }
-    if(isset($_GET['data_'])){
+    if (isset($_GET['data_'])) {
         echo "<input type='button' value='Voltar ao Filtro' onClick='history.go(-1)'>";
     }
     ?>
     <br><br>
-    <form style="text-align: center; font-size: 20px;" action="registro_manual.php<?php if(isset($_GET['data_'])){echo "?id_=".$_GET['id_']."&data_=".$_GET['data_'];}?>" method="post">
+    <form style="text-align: center; font-size: 20px;"
+        action="registro_manual.php<?php if (isset($_GET['data_'])) {
+            echo "?id_=" . $_GET['id_'] . "&data_=" . $_GET['data_'];
+        } ?>"
+        method="post">
         <label for="fun">Funcionario:</label>
         <select name="fun" id="fun" required>
             <option value=""></option>
             <?php
             foreach ($data as $row) {
-                $situacao="";
-                if((isset($_GET['id_']) || isset($_POST['fun'])) && ($_GET['id_'] == $row['id'] || $_POST['fun'] == $row['id'])){
-                    $situacao="selected";
+                $situacao = "";
+                if ((isset($_GET['id_']) || isset($_POST['fun'])) && ($_GET['id_'] == $row['id'] || $_POST['fun'] == $row['id'])) {
+                    $situacao = "selected";
                 }
-                echo "<option value='" . $row['id'] . "' ".$situacao.">" . $row['nome'] . "</option>";
+                echo "<option value='" . $row['id'] . "' " . $situacao . ">" . $row['nome'] . "</option>";
             }
             ?>
         </select>
         Data:
-        <input type="date" id="data" name="data" <?php if(isset($_GET['data_'])){echo "value=".$_GET['data_'];}?> required onchange="verificarDia()">
+        <input type="date" id="data" name="data" <?php if (isset($_GET['data_'])) {
+            echo "value=" . $_GET['data_'];
+        } ?>
+            required onchange="verificarDia()">
         <br><br>
         <b id="en1">Entrada 01:</b>
         <input type="time" name="entrada" id="entrada01" value="08:00:00" required>
@@ -204,9 +211,9 @@ if (isset($_POST['fun'])) {
         <button id="button" type="submit">Registrar ponto manual</button>
     </form>
     <script>
-        <?php if(isset($_GET['data_'])){
-                echo "verificarDia();";
-            }?>
+        <?php if (isset($_GET['data_'])) {
+            echo "verificarDia();";
+        } ?>
     </script>
 </body>
 

@@ -8,7 +8,7 @@ $dbname = "ponto";
 $port = 3306;
 
 try {
-    //Conexao com a porta
+    //Conexao com a portaF
     //$conn = new PDO("mysql:host=$host;port=$port;dbname=" . $dbname, $user, $pass);
 
     //Conexao sem a porta
